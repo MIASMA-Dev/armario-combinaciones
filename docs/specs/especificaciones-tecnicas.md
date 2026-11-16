@@ -2,7 +2,7 @@
 
 ## 1. Stack
 - Frontend: Angular 22 (web), empaquetado Tauri (desktop) + Capacitor (mobile).
-- Backend: Spring Boot 4.1.2 / Java 17, REST.
+- Backend: Spring Boot 4.1.2 / Java 25, REST.
 - Librería base: proyecto 11 (core-domain, core-application, infra-*).
 - Persistencia: PostgreSQL/H2 (sustituye InMemory) para sync por usuario.
 

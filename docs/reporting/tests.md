@@ -5,7 +5,7 @@ Actualizado: 2026-11-16
 ## Entorno
 
 - Frontend: Angular 22; `npm install` + `ng build` verificados (Node v26.12.1 / npm 12.2.2).
-- Backend: Spring Boot 4.1.2 / Java 17, H2 in-memory para dev/tests; arranque con perfil `dev,postgres` (PostgreSQL via Podman). Arrancado con Maven 3.10.1 local (`.build/maven`) y tests con JUnit 6.
+- Backend: Spring Boot 4.1.2 / Java 25, H2 in-memory para dev/tests; arranque con perfil `dev,postgres` (PostgreSQL via Podman). Arrancado con Maven 3.10.1 local (`.build/maven`) y tests con JUnit 6. Se ejecutan con JDK 25 (`C:\Users\Ivan_\dev\tools\jdk-25\jdk-25.0.5+8`).
 - Usuarios de test (password: `test1234`):
   - ana@armario.test — perfiles: Ana (MUJER), Peque (NINO, compartido con Carlos)
   - carlos@armario.test — perfiles: Carlos (HOMBRE), Bebe (BEBE, compartido con Ana)

@@ -8,7 +8,7 @@ Proyecto para elegir combinaciones de ropa por colores y mantener el orden en el
 
 ## Estructura
 
-- `backend/`: API Spring Boot (Java 17) que usa los JARs de `../11-sistema-base-captura-orden/dist`.
+- `backend/`: API Spring Boot (Java 25) que usa los JARs de `../11-sistema-base-captura-orden/dist`.
 - `frontend/`: app Angular minima (Angular 22).
 - `docs/`: especificaciones, plan de micro-subtareas y reporting.
 
@@ -28,7 +28,7 @@ Backend:
 cd backend
 mvn spring-boot:run
 ```
-Si no hay Maven global: `.build/maven/apache-maven-3.10.1/bin/mvn.cmd spring-boot:run` (JAVA_HOME configurado a JDK 17).
+Si no hay Maven global: `.build/maven/apache-maven-3.10.1/bin/mvn.cmd spring-boot:run` (JAVA_HOME configurado a JDK 25).
 
 Base de datos de desarrollo (PostgreSQL con Podman):
 ```

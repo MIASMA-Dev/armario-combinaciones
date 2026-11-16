@@ -30,7 +30,7 @@ Actualizado: 2026-11-16
 
 ## Notas
 
-- Backend compila con JDK 17 usando dependencias en cache; `mvn test` funciona con Maven local en `.build/maven`.
+- Backend compila con JDK 25 usando dependencias en cache; `mvn test` funciona con Maven local en `.build/maven`.
 - Backend verificado en ejecucion: login, token Bearer, perfiles, combinaciones, 403 y logout.
 - Frontend: `npm install` y `npm run build` verificados (Node 26 / npm 12).
 - Tests unitarios: 6/6 en `CombinacionServiceTest` (JUnit 6).

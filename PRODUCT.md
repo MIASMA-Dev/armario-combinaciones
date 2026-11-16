@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Angular 22 (frontend) + Spring Boot 4.1.2 / Java 17 (backend), consumiendo la libreria del proyecto 11 (core-domain, core-application, infra-*). Empaquetado multiplataforma: Tauri (escritorio) + Capacitor (movil). Persistencia con BD (sustituye repositorios in-memory) para sincronizacion por usuario.
+Angular 22 (frontend) + Spring Boot 4.1.2 / Java 25 (backend), consumiendo la libreria del proyecto 11 (core-domain, core-application, infra-*). Empaquetado multiplataforma: Tauri (escritorio) + Capacitor (movil). Persistencia con BD (sustituye repositorios in-memory) para sincronizacion por usuario.
 
 ## Users
 
