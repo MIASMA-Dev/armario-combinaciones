@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Armario y Combinaciones: seis mundos</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--sb:#f2f2f0;--sf:#1a1a1a;--sl:#c9c9c4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sb:#1b1b1a;--sf:#eee;--sl:#444}}
+:root[data-theme="dark"]{--sb:#1b1b1a;--sf:#eee;--sl:#444}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--sb);color:var(--sf);font:15px/1.4 system-ui,sans-serif}
+.sw{display:flex;gap:6px;overflow-x:auto;padding:10px 12px;border-bottom:1px solid var(--sl)}
+.sw button{flex:none;font:inherit;font-size:13px;padding:7px 12px;border:1px solid var(--sl);background:none;color:var(--sf);border-radius:999px;cursor:pointer}
+.sw button[aria-pressed=true]{background:var(--sf);color:var(--sb)}
+.sw button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.stage{padding:16px 12px 40px;display:flex;justify-content:center}
+.scr{width:100%;max-width:1080px;background:var(--bg);color:var(--fg);font-family:var(--ff);border:1px solid var(--ln);border-radius:var(--r);padding:20px;position:relative;overflow:hidden}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.top h1{margin:0;font-size:22px;font-weight:var(--hw);line-height:1.1}
+.sig{font-size:64px;line-height:.8;font-weight:700;color:var(--ac)}
+.cta{font:inherit;font-weight:600;padding:10px 16px;background:var(--ac);color:var(--ct);border:0;border-radius:var(--rb);cursor:pointer}
+.tabs{display:flex;gap:4px;margin:6px 0 12px;border-bottom:1px solid var(--ln);flex-wrap:wrap}
+.tabs span{padding:8px 14px;color:var(--mu)}
+.tabs .on{color:var(--fg);font-weight:700;box-shadow:inset 0 -3px var(--ac)}
+.fl{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.fl span{padding:6px 12px;border:1px solid var(--ln);border-radius:var(--rb);background:var(--cd);font-size:13px}
+.fl b{font-weight:400;color:var(--mu);margin-left:auto;font-size:13px}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:520px}
+th{text-align:left;font-weight:600;color:var(--mu);font-size:13px;padding:8px 10px;border-bottom:2px solid var(--fg)}
+td{padding:11px 10px;border-bottom:1px solid var(--ln)}
+.sw2{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px;border:1px solid var(--ln)}
+.st{white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.card{background:var(--cd);border:1px solid var(--ln);border-radius:var(--r);padding:12px}
+.card .th{height:84px;border-radius:calc(var(--r) - 2px);margin-bottom:10px;display:flex;align-items:center;justify-content:center;font-size:30px}
+.card h3{margin:0 0 2px;font-size:15px}
+.card p{margin:0 0 8px;color:var(--mu);font-size:13px}
+.chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.bar{position:sticky;bottom:0;margin:16px -20px -20px;padding:12px 20px;background:var(--cd);border-top:1px solid var(--ln);display:flex;gap:10px;justify-content:space-between;align-items:center}
+.note{max-width:1080px;margin:14px auto 0;font-size:13px;color:var(--sf);opacity:.7;padding:0 4px}
+/* 1 specimen */
+[data-w="1"]{--bg:#fbfaf7;--fg:#141414;--mu:#6b6b66;--ln:#dcdad3;--cd:#fbfaf7;--ac:#e4381c;--ct:#fff;--r:0;--rb:0;--ff:"Helvetica Neue",Arial,sans-serif;--hw:400}
+[data-w="1"] .sig{font-size:150px;font-weight:300;letter-spacing:-.05em}
+[data-w="1"] .top h1{font-size:15px;font-weight:500}
+[data-w="1"] td,[data-w="1"] th{padding:12px 0}
+[data-w="1"] .st{font-variant-numeric:tabular-nums}
+/* 2 pop */
+[data-w="2"]{--bg:#fde8f0;--fg:#3b2a4a;--mu:#7d6a8c;--ln:#fff;--cd:#fff;--ac:#ff5c8a;--ct:#fff;--r:22px;--rb:999px;--ff:"Trebuchet MS","Avenir Next",sans-serif;--hw:800}
+[data-w="2"] .card{border:3px solid #fff;box-shadow:0 0 0 2px #f3c3d6}
+[data-w="2"] .card .th{background:#e9e1ff}
+[data-w="2"] .card:nth-child(3n+2) .th{background:#d8f3e8}
+[data-w="2"] .card:nth-child(3n) .th{background:#ffe9b8}
+/* 3 warm */
+[data-w="3"]{--bg:#fff4ea;--fg:#2b2320;--mu:#7a6a60;--ln:#f0dfd0;--cd:#fff;--ac:#2f6df6;--ct:#fff;--r:20px;--rb:14px;--ff:"SF Pro Text","Segoe UI",system-ui,sans-serif;--hw:700}
+[data-w="3"] .card{box-shadow:0 1px 2px rgba(80,50,30,.08);margin-bottom:0}
+[data-w="3"] .grid{grid-template-columns:1fr}
+[data-w="3"] .card{display:flex;align-items:center;gap:14px}
+[data-w="3"] .card .th{width:64px;height:64px;margin:0;background:#fbe3cf;flex:none}
+[data-w="3"] .card>div:last-child{flex:1}
+.empty{margin-top:12px;border:2px dashed var(--ln);border-radius:var(--r);padding:16px;color:var(--mu);text-align:center}
+/* 4 slide rack */
+[data-w="4"]{--bg:#d9a21b;--fg:#1c1b1a;--mu:#3b3220;--ln:#1c1b1a;--cd:rgba(70,85,100,.35);--ac:#1c1b1a;--ct:#d9a21b;--r:0;--rb:0;--ff:"Courier New",monospace;--hw:700}
+[data-w="4"] .tw{background:rgba(70,85,100,.35);backdrop-filter:blur(3px);transform:rotate(-1.2deg);padding:8px;border:1px solid #1c1b1a}
+[data-w="4"] *{font-size:14px}
+[data-w="4"] .tabs span{border:1px solid #1c1b1a;background:rgba(70,85,100,.35);transform:rotate(-3deg);text-transform:lowercase}
+[data-w="4"] .tabs .on{background:#1c1b1a;color:#d9a21b;box-shadow:none}
+[data-w="4"] td{border-bottom:1px dashed #1c1b1a}
+.tick{position:absolute;right:6px;top:70px;bottom:20px;width:8px;background:repeating-linear-gradient(#1c1b1a 0 1px,transparent 1px 12px)}
+/* 5 acetate */
+[data-w="5"]{--bg:#d4552b;--fg:#1f1d1a;--mu:#5f5a52;--ln:#c9c3b6;--cd:#f6f2e6;--ac:#c8341c;--ct:#fff;--r:2px;--rb:2px;--ff:"Helvetica Neue",Arial,sans-serif;--hw:700;padding:20px 20px 20px 36px}
+[data-w="5"] .sheet{background:rgba(250,247,238,.94);margin-left:30px;padding:18px 18px 18px 22px;border-radius:2px;box-shadow:0 1px 0 #fff inset;position:relative;color:#1f1d1a}
+[data-w="5"] .sheet td,[data-w="5"] .sheet p{font-family:Georgia,"Times New Roman",serif}
+[data-w="5"] .holes{position:absolute;left:-26px;top:20px;bottom:20px;display:flex;flex-direction:column;justify-content:space-between}
+[data-w="5"] .holes i{width:14px;height:14px;border-radius:50%;background:#d4552b;box-shadow:inset 0 0 0 2px #8f3418}
+[data-w="5"] .rail{position:absolute;right:0;top:80px;display:flex;flex-direction:column;gap:4px}
+[data-w="5"] .rail span{background:#f6f2e6;color:#1f1d1a;padding:10px 8px;writing-mode:vertical-rl;border-radius:0 6px 6px 0;font-size:13px}
+[data-w="5"] .rail .on{background:#1f1d1a;color:#f6f2e6;margin-left:-8px;padding-left:16px}
+.mk{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px;border:2px solid currentColor}
+.mk.f{background:currentColor}.mk.h{border-style:dotted}
+/* 6 ticket */
+[data-w="6"]{--bg:#fff;--fg:#1a1850;--mu:#5d5c88;--ln:#1a1850;--cd:#fff;--ac:#c8102e;--ct:#fff;--r:4px;--rb:2px;--ff:"Courier New","Lucida Console",monospace;--hw:700;border:2px solid #1a1850}
+[data-w="6"] .sig{font-size:40px;letter-spacing:.1em}
+[data-w="6"] .cp{display:grid;grid-template-columns:90px 1fr;border:1px solid #1a1850;margin-bottom:8px;position:relative}
+[data-w="6"] .cp .sd{background:#1a1850;color:#fff;padding:10px 6px;font-size:12px;text-align:center;display:flex;align-items:center;justify-content:center}
+[data-w="6"] .cp .bd{padding:10px 14px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;align-items:center}
+[data-w="6"] .stamp{border:2px solid;padding:2px 8px;font-weight:700;display:inline-block;transform:rotate(-4deg);font-size:12px}
+@media (max-width:640px){[data-w="6"] .cp .bd{grid-template-columns:1fr 1fr}[data-w="1"] .sig{font-size:90px}}
+</style></head>
+<body>
+<nav class="sw" id="sw" aria-label="Mundo visual"></nav>
+<div class="stage"><div id="root"></div></div>
+<p class="note" id="nt"></p>
+<script>
+var G=[["Camisa lino","Blanco","#f2efe6","Verano","d"],["Jersey lana merino","Gris","#8a8d91","Invierno","u"],["Vaquero recto","Azul","#3a5a8c","Todo el año","d"],["Gabardina","Beige","#c8b08a","Otoño","l"],["Vestido midi","Verde","#3f7a5a","Primavera","d"],["Blazer","Marino","#1f2a44","Otoño","p"],["Camiseta básica","Negro","#1a1a1a","Todo el año","u"],["Falda plisada","Burdeos","#7a1f35","Invierno","d"]];
+var S={d:"Disponible",u:"En uso",l:"Lavandería",p:"Pendiente"};
+var W=[
+{n:"Variable Font Specimen",nt:"Un glifo gigante como firma; tabla sobre rejilla de línea base y recuento en cifras tabulares.",t:"table"},
+{n:"Pop Culture Shelf",nt:"Fondo pastel, tarjetas con filete blanco, mascota como miniatura y una cinta de color por estado.",t:"grid"},
+{n:"Warm Consumer App",nt:"Un solo color de acción (azul) para lo accionable, tarjetas de una idea y barra inferior fija.",t:"list"},
+{n:"Slide Rack",nt:"Lecho dorado bajo cristal pizarra, un solo tamaño de letra, estado como marca llena o hueca.",t:"rack"},
+{n:"Acetate Tab Board",nt:"Acetato lechoso sobre tablero naranja óxido, agujeros de encuadernación y pestañas escalonadas.",t:"acetate"},
+{n:"Ticket Wallet",nt:"Cupones con talón, estados sellados y arco de ruta como firma.",t:"ticket"}];
+var sc={1:["#141414"],2:["#7d5cff","#2fbf8a","#ff8a3d","#ff5c8a"]};
+function st(w,k){var s=S[k];
+ if(w==1)return "<span class=st>"+s+"</span>";
+ if(w==2){var c={d:"#2fbf8a",u:"#7d5cff",l:"#2b9fd9",p:"#ff8a3d"}[k];return "<span class=chip style='background:"+c+";color:#fff'>"+s+"</span>"}
+ if(w==3){var c3={d:["#e1f5e6","#1d6b3a"],u:["#dfe8ff","#1c4bb8"],l:["#e6f1f8","#1d5d85"],p:["#ffe9d0","#8a4b0e"]}[k];return "<span class=chip style='background:"+c3[0]+";color:"+c3[1]+"'>"+s+"</span>"}
+ if(w==4)return "<span class=st><i class='mk "+(k=="d"?"f":k=="p"?"":"h")+"'></i>"+s+"</span>";
+ if(w==5)return "<span class=st><i class='mk "+(k=="d"?"f":k=="p"?"h":"")+"'></i>"+s+"</span>";
+ var c6={d:["VÁLIDA","#1a1850"],u:["USADA","#c8102e"],l:["NULA","#5d5c88"],p:["PENDIENTE","#c8102e"]}[k];return "<span class=stamp style='color:"+c6[1]+"'>"+c6[0]+"</span>"}
+function filt(w){return "<div class=fl><span>Temporada: todas</span><span>Color: todos</span><span>Estado: todos</span><b>"+(w==1?"n = 128 / 8 visibles":"128 prendas")+"</b></div>"}
+function tabs(w){var T=["Inventario","Outfits","Órdenes"];return "<div class=tabs>"+T.map(function(x,i){return "<span"+(i?"":" class=on")+">"+x+"</span>"}).join("")+"</div>"}
+function tbl(w){return "<div class=tw><table><thead><tr><th>Nombre<th>Color<th>Temporada<th>Estado</tr></thead><tbody>"+G.map(function(g){return "<tr><td>"+g[0]+"<td><i class=sw2 style='background:"+g[2]+"'></i>"+g[1]+"<td>"+g[3]+"<td>"+st(w,g[4])+"</tr>"}).join("")+"</tbody></table></div>"}
+function cards(w){var em=["👕","🧶","👖","🧥","👗","🧥","👕","🩳"];return "<div class=grid>"+G.map(function(g,i){return "<div class=card><div class=th style='"+(w==3?"background:"+g[2]+"33":"")+"'>"+em[i]+"</div><div><h3>"+g[0]+"</h3><p>"+g[1]+" · "+g[3]+(w==2?" · alta 12/03":"")+"</p>"+st(w,g[4])+"</div></div>"}).join("")+"</div>"}
+function tickets(w){return G.map(function(g,i){return "<div class=cp><div class=sd>Nº "+(1040+i)+"</div><div class=bd><b>"+g[0]+"</b><span>"+g[1]+"</span><span>"+g[3]+"</span>"+st(w,g[4])+"</div></div>"}).join("")}
+function render(i){var w=i+1,t=W[i].t;
+ var sig={1:"<div class=sig>A</div>",6:"<div class=sig>✈ ⌒ BCN</div>"}[w]||"";
+ var body=t=="table"||t=="rack"?tbl(w):t=="grid"||t=="list"?cards(w):t=="ticket"?tickets(w):tbl(w);
+ var head="<div class=top><h1>Armario y Combinaciones</h1>"+sig+"<button class=cta>Capturar prenda</button></div>";
+ var h;
+ if(w==5)h="<div class=holes><i></i><i></i><i></i><i></i><i></i></div><div class=rail><span class=on>Inventario</span><span>Outfits</span><span>Órdenes</span></div><div class=sheet>"+head+filt(w)+body+"</div>";
+ else{h=head+(w==5?"":tabs(w))+filt(w)+body;
+  if(w==3)h+="<div class=empty>Aún no tienes outfits guardados. Combina dos prendas para crear el primero.</div><div class=bar><span>Inventario</span><span>Outfits</span><span>Órdenes</span><button class=cta>Capturar prenda</button></div>";
+  if(w==2)h+="<div class=bar><span>🎀 Armario</span><span>Outfits</span><button class=cta>Capturar prenda</button></div>";
+  if(w==4)h+="<div class=tick></div>"}
+ document.getElementById("root").innerHTML="<div class=scr data-w='"+w+"'>"+h+"</div>";
+ document.getElementById("nt").textContent=W[i].n+": "+W[i].nt;
+ [].forEach.call(document.querySelectorAll("#sw button"),function(b,j){b.setAttribute("aria-pressed",j==i)});
+ try{location.hash="m"+w}catch(e){}}
+var sw=document.getElementById("sw");
+W.forEach(function(x,i){var b=document.createElement("button");b.textContent=(i+1)+". "+x.n;b.onclick=function(){render(i)};sw.appendChild(b)});
+var m=/^#m([1-6])$/.exec(location.hash);render(m?m[1]-1:0);
+window.addEventListener("hashchange",function(){var m=/^#m([1-6])$/.exec(location.hash);if(m)render(m[1]-1)});
+</script></body></html>

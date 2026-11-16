@@ -1,0 +1,30 @@
+<div class="login-card">
+  @if (!heroHidden()) {
+    <img class="hero" src="/assets/armario/hero.png" alt="Armario y Combinaciones" (error)="heroHidden.set(true)" />
+  }
+  <h1>Armario y Combinaciones</h1>
+  <p class="sub">{{ mode() === 'login' ? 'Inicia sesion' : 'Crea tu cuenta' }}</p>
+
+  @if (mode() === 'register') {
+    <label>Nombre</label>
+    <input [(ngModel)]="nombre" name="nombre" placeholder="Tu nombre" />
+  }
+
+  <label>Email</label>
+  <input [(ngModel)]="email" name="email" type="email" placeholder="tu@email.com" />
+
+  <label>Contrasena</label>
+  <input [(ngModel)]="password" name="password" type="password" placeholder="********" />
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  <button class="primary" (click)="submit()" [disabled]="loading()">
+    {{ mode() === 'login' ? 'Entrar' : 'Crear cuenta' }}
+  </button>
+
+  <button class="link" (click)="toggleMode()">
+    {{ mode() === 'login' ? 'Crear cuenta nueva' : 'Ya tengo cuenta' }}
+  </button>
+</div>

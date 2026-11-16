@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+  background-color: #fde8f0;
+  background-image: url('/assets/armario/textura-pastel.png');
+  background-size: 512px;
+  min-height: 100vh;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background: #fff;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px #f3c3d6;
+  border-radius: 22px;
+  padding: 24px;
+  color: #3b2a4a;
+  font-family: 'Trebuchet MS', 'Avenir Next', sans-serif;
+}
+
+.hero {
+  display: block;
+  width: calc(100% + 48px);
+  margin: -24px -24px 16px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 19px 19px 0 0;
+}
+
+h1 { margin: 0 0 4px; font-size: 22px; font-weight: 800; }
+.sub { margin: 0 0 16px; color: #7d6a8c; font-size: 14px; }
+label { display: block; margin: 10px 0 4px; font-size: 13px; font-weight: 600; }
+input { width: 100%; padding: 10px 12px; border: 1px solid #e9e1ff; border-radius: 12px; font: inherit; }
+input:focus { outline: 2px solid #ff5c8a; outline-offset: 1px; }
+button { width: 100%; margin-top: 12px; padding: 10px 16px; border: 0; border-radius: 999px; font: inherit; font-weight: 700; cursor: pointer; }
+.primary { background: #ff5c8a; color: #fff; }
+.link { background: none; color: #7d6a8c; font-weight: 400; text-decoration: underline; }
+.error { color: #c8102e; font-size: 13px; margin: 8px 0 0; }

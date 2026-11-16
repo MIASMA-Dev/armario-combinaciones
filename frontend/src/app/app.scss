@@ -1,0 +1,170 @@
+:host {
+  --bg: #fde8f0;
+  --fg: #3b2a4a;
+  --mu: #7d6a8c;
+  --ln: #fff;
+  --cd: #fff;
+  --ac: #ff5c8a;
+  --ct: #fff;
+  --r: 22px;
+  --rb: 999px;
+
+  display: block;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.scr {
+  width: 100%;
+  max-width: 1080px;
+  background-color: var(--bg);
+  background-image: url('/assets/armario/textura-pastel.png');
+  background-size: 512px;
+  color: var(--fg);
+  font-family: 'Trebuchet MS', 'Avenir Next', sans-serif;
+  border: 1px solid var(--ln);
+  border-radius: var(--r);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.top h1 { margin: 0; font-size: 22px; font-weight: 800; line-height: 1.1; }
+.user { display: flex; align-items: center; gap: 8px; }
+.user span { font-size: 13px; color: var(--mu); }
+.logout { font: inherit; font-size: 13px; padding: 8px 12px; border: 1px solid var(--ln); border-radius: var(--rb); background: var(--cd); color: var(--fg); cursor: pointer; }
+
+.cta {
+  font: inherit;
+  font-weight: 600;
+  padding: 10px 16px;
+  background: var(--ac);
+  color: var(--ct);
+  border: 0;
+  border-radius: var(--rb);
+  cursor: pointer;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin: 6px 0 12px;
+  border-bottom: 1px solid var(--ln);
+  flex-wrap: wrap;
+}
+.tabs span { padding: 8px 14px; color: var(--mu); }
+.tabs .on { color: var(--fg); font-weight: 700; box-shadow: inset 0 -3px var(--ac); }
+
+.fl {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  align-items: center;
+}
+.fl span, .fl select { padding: 6px 12px; border: 1px solid var(--ln); border-radius: var(--rb); background: var(--cd); font-size: 13px; color: var(--fg); }
+.fl .offline { background: #ffe9b8; border-color: #ffd166; color: #7a4a00; font-weight: 700; }
+.empty { grid-column: 1 / -1; border: 2px dashed #f3c3d6; border-radius: var(--r); padding: 24px; text-align: center; color: var(--mu); }
+.error { color: #c8102e; font-size: 13px; margin: 0 0 12px; }
+.fl b { font-weight: 400; color: var(--mu); margin-left: auto; font-size: 13px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+.card {
+  background: var(--cd);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px #f3c3d6;
+  border-radius: var(--r);
+  padding: 12px;
+}
+.card .th { height: 84px; border-radius: calc(var(--r) - 2px); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-size: 30px; background: #e9e1ff; overflow: hidden; }
+.card .th img { width: 100%; height: 100%; object-fit: contain; padding: 6px; box-sizing: border-box; }
+.card:nth-child(3n+2) .th { background: #d8f3e8; }
+.card:nth-child(3n) .th { background: #ffe9b8; }
+.card h3 { margin: 0 0 2px; font-size: 15px; }
+.card p { margin: 0 0 8px; color: var(--mu); font-size: 13px; }
+.card-actions { display: flex; gap: 6px; margin-top: 10px; align-items: center; }
+.card-actions select { flex: 1; min-width: 0; padding: 5px 8px; border: 1px solid #e9e1ff; border-radius: 10px; background: #fff; font: inherit; font-size: 12px; color: var(--fg); }
+.card-actions .del { padding: 5px 10px; border: 1px solid #f3c3d6; border-radius: 999px; background: #fff; color: #c8102e; font: inherit; font-size: 12px; cursor: pointer; }
+.card-actions .del:hover { background: #ffe9b8; }
+
+.chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.combos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+.combo {
+  background: var(--cd);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px #f3c3d6;
+  border-radius: var(--r);
+  padding: 14px;
+}
+.combo-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.combo-head h3 { margin: 0; font-size: 15px; }
+.combo ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.combo li { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.combo li b { font-weight: 600; }
+.combo li small { color: var(--mu); margin-left: auto; font-size: 11px; }
+.combo .dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px #e9e1ff; flex: none; }
+.combo .logout { border: 1px solid #e9e1ff; background: #fff; color: var(--fg); margin-top: 6px; }
+.combo .hint { margin: 2px 0 0; }
+
+.modal { position: fixed; inset: 0; background: rgba(59, 42, 74, .35); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 10; }
+.modal-card { width: 100%; max-width: 420px; background: #fff; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 6px; color: #3b2a4a; }
+.modal-card h2 { margin: 0 0 8px; font-size: 20px; }
+.modal-card label { font-size: 13px; font-weight: 600; margin-top: 6px; }
+.modal-card input, .modal-card select { padding: 9px 11px; border: 1px solid #e9e1ff; border-radius: 12px; font: inherit; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+.modal-card hr { width: 100%; border: 0; border-top: 1px solid #e9e1ff; margin: 12px 0 4px; }
+.modal-card .logout { border: 1px solid #e9e1ff; background: #fff; color: var(--fg); }
+.modal-card .logout:hover { background: #fde8f0; }
+.hint { font-size: 13px; color: #7d6a8c; margin: 4px 0; }
+
+.bar {
+  position: sticky;
+  bottom: 0;
+  margin: 16px -20px -20px;
+  padding: 12px 20px;
+  background: var(--cd);
+  border-top: 1px solid var(--ln);
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0 0 var(--r) var(--r);
+}
+
+@media (max-width: 640px) {
+  :host { padding: 0; }
+  .scr { border: 0; border-radius: 0; padding: 14px; min-height: 100vh; }
+  .top h1 { font-size: 19px; }
+  .user { width: 100%; justify-content: space-between; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .card { padding: 10px; }
+  .card .th { height: 64px; font-size: 24px; }
+  .combos { grid-template-columns: 1fr; }
+  .bar { margin: 16px -14px -14px; padding: 10px 14px; }
+  .modal-card { max-height: 90vh; overflow-y: auto; }
+}

@@ -1,0 +1,230 @@
+@if (!auth.user()) {
+  <app-login />
+} @else {
+  <div class="scr">
+    <div class="top">
+      <h1>{{ title() }}</h1>
+      <div class="user">
+        <span>{{ auth.user()?.nombre }}</span>
+        <button class="logout" (click)="openProfiles()">Perfiles</button>
+        <button class="logout" (click)="logout()">Salir</button>
+        <button class="cta" (click)="openCapture()">Capturar prenda</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <span [class.on]="activeTab() === 'inventario'" (click)="showInventario()">Inventario</span>
+      <span [class.on]="activeTab() === 'combinaciones'" (click)="showCombinaciones()">Combinaciones</span>
+      <span [class.on]="activeTab() === 'ordenes'" (click)="showOrdenes()">Órdenes</span>
+    </div>
+
+    <div class="fl">
+      @if (!connectivity.online()) {
+        <span class="offline">Sin conexión · datos locales</span>
+      }
+      <select (change)="selectProfile(+$any($event.target).value)">
+        @for (p of profiles(); track p.id) {
+          <option [value]="p.id" [selected]="p.id === selectedProfileId()">{{ p.nombre }} · {{ p.tipo }}</option>
+        }
+      </select>
+      @if (activeTab() === 'inventario') {
+        <select (change)="filtroTemporada.set($any($event.target).value)">
+          <option value="">Temporada: todas</option>
+          @for (t of temporadasDisponibles(); track t) {
+            <option [value]="t" [selected]="t === filtroTemporada()">{{ t }}</option>
+          }
+        </select>
+        <select (change)="filtroColorInv.set($any($event.target).value)">
+          <option value="">Color: todos</option>
+          @for (c of coloresInventario(); track c) {
+            <option [value]="c" [selected]="c === filtroColorInv()">{{ c }}</option>
+          }
+        </select>
+        <select (change)="filtroEstado.set($any($event.target).value)">
+          <option value="">Estado: todos</option>
+          @for (e of estadosDisponibles; track e.key) {
+            <option [value]="e.key" [selected]="e.key === filtroEstado()">{{ e.label }}</option>
+          }
+        </select>
+      } @else if (activeTab() === 'combinaciones') {
+        <select (change)="filtroColor.set($any($event.target).value)">
+          <option value="">Color: todos</option>
+          @for (c of coloresDisponibles(); track c) {
+            <option [value]="c" [selected]="c === filtroColor()">{{ c }}</option>
+          }
+        </select>
+        <select (change)="filtroTipo.set($any($event.target).value)">
+          <option value="">Categoría: todas</option>
+          @for (t of tiposDisponibles; track t.key) {
+            <option [value]="t.key" [selected]="t.key === filtroTipo()">{{ t.label }}</option>
+          }
+        </select>
+      } @else {
+        <span>Inactividad &gt; 180 días · reposición de básicos</span>
+      }
+      <b>
+        @if (activeTab() === 'inventario') {
+          {{ prendasFiltradas().length }} prenda{{ prendasFiltradas().length === 1 ? '' : 's' }}
+        } @else if (activeTab() === 'combinaciones') {
+          {{ combinacionesFiltradas().length }} {{ combinacionesFiltradas().length === 1 ? 'combinación' : 'combinaciones' }}
+        } @else {
+          {{ ordenes().length }} {{ ordenes().length === 1 ? 'sugerencia' : 'sugerencias' }}
+        }
+      </b>
+    </div>
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    @if (activeTab() === 'inventario') {
+      <div class="grid">
+        @for (g of prendasFiltradas(); track g.id) {
+          <div class="card">
+            <div class="th">
+              <img [src]="g.imagenUrl || '/assets/armario/prenda-placeholder.svg'" [alt]="g.nombre" />
+            </div>
+            <div>
+              <h3>{{ g.nombre }}</h3>
+              <p>{{ g.color || 'Sin color' }} · {{ g.temporada || 'Todo el año' }}</p>
+              <span class="chip" [style.background]="color(g)" style="color:#fff">{{ estado(g) }}</span>
+            </div>
+            <div class="card-actions">
+              <select (change)="cambiarEstado(g, $any($event.target).value)" aria-label="Estado de la prenda">
+                @for (e of estadosDisponibles; track e.key) {
+                  <option [value]="e.key" [selected]="e.key === g.estado">{{ e.label }}</option>
+                }
+              </select>
+              <button class="del" (click)="eliminarPrenda(g)">Eliminar</button>
+            </div>
+          </div>
+        } @empty {
+          <div class="empty">Aún no hay prendas en este perfil. Captura la primera.</div>
+        }
+      </div>
+    } @else if (activeTab() === 'combinaciones') {
+      <div class="combos">
+        @for (c of combinacionesFiltradas(); track c.id) {
+          <div class="combo">
+            <div class="combo-head">
+              <h3>Outfit</h3>
+              <span class="chip" style="background:#7d5cff;color:#fff">{{ c.esquemaColor }}</span>
+            </div>
+            <ul>
+              @for (p of c.prendas; track p.id) {
+                <li>
+                  <span class="dot" [style.background]="p.color || '#ddd'"></span>
+                  <b>{{ p.nombre }}</b>
+                  <small>{{ tipoLabel[p.tipoPrenda] || p.tipoPrenda }}</small>
+                </li>
+              }
+            </ul>
+          </div>
+        } @empty {
+          <div class="empty">
+            No hay suficientes prendas para combinar. Añade al menos una prenda superior y una inferior.
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="combos">
+        @for (o of ordenes(); track o.id) {
+          <div class="combo">
+            <div class="combo-head">
+              <h3>{{ o.nombre }}</h3>
+              <span class="chip" [style.background]="prioridadColor[o.prioridad]" style="color:#fff">
+                {{ prioridadLabel[o.prioridad] }}
+              </span>
+            </div>
+            <p class="hint">{{ o.motivo }}</p>
+            <p class="hint">
+              {{ tipoLabel[o.categoria] || o.categoria }} ·
+              {{ o.tipoAccion === 'REVISAR' ? 'Revisar' : 'Reponer' }}
+            </p>
+            @if (o.prendaId) {
+              <button class="logout" (click)="marcarEnUso(o)">Marcar en uso</button>
+            } @else {
+              <button class="logout" (click)="capturarDe(o)">Capturar prenda</button>
+            }
+          </div>
+        } @empty {
+          <div class="empty">Todo al día: no hay prendas inactivas ni categorías bajo mínimo.</div>
+        }
+      </div>
+    }
+
+    <div class="bar">
+      <span (click)="showInventario()" style="cursor:pointer">🎀 Armario</span>
+      <span (click)="showCombinaciones()" style="cursor:pointer">Outfits</span>
+      <button class="cta" (click)="openCapture()">Capturar prenda</button>
+    </div>
+
+    @if (showProfiles()) {
+      <div class="modal">
+        <div class="modal-card">
+          <h2>Perfiles</h2>
+          <label>Nuevo perfil</label>
+          <input [(ngModel)]="newProfileName" placeholder="Nombre del perfil" />
+          <select [(ngModel)]="newProfileTipo">
+            <option value="HOMBRE">Hombre</option>
+            <option value="MUJER">Mujer</option>
+            <option value="NINO">Niño</option>
+            <option value="BEBE">Bebé</option>
+          </select>
+          <div class="modal-actions">
+            <button class="logout" (click)="crearPerfil()">Crear perfil</button>
+          </div>
+
+          <hr />
+          <label>Compartir "{{ selectedProfile()?.nombre }}"</label>
+          @if (puedeCompartir()) {
+            <input [(ngModel)]="shareEmail" placeholder="email@ejemplo.com" />
+            <div class="modal-actions">
+              <button class="logout" (click)="compartirPerfil()">Compartir</button>
+            </div>
+          } @else {
+            <p class="hint">Solo el propietario puede compartir este perfil.</p>
+          }
+
+          @if (profileMsg()) { <p class="hint">{{ profileMsg() }}</p> }
+          @if (error()) { <p class="error">{{ error() }}</p> }
+
+          <div class="modal-actions">
+            <button class="cta" (click)="closeProfiles()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (showCapture()) {
+      <div class="modal">
+        <div class="modal-card">
+          <h2>Capturar prenda</h2>
+          <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+          @if (analyzing()) { <p class="hint">Analizando foto...</p> }
+          @if (vision(); as v) {
+            <p class="hint">Sugerencia: {{ v.colores.join(', ') }} · {{ v.tipoPrenda }} · {{ v.tejido }}</p>
+          }
+          <label>Nombre</label>
+          <input [(ngModel)]="captureName" placeholder="Camisa lino" />
+          <label>Color</label>
+          <input [(ngModel)]="captureColor" placeholder="#f2efe6" />
+          <label>Tipo</label>
+          <select [(ngModel)]="captureTipo">
+            <option>SUPERIOR</option><option>INFERIOR</option><option>ROPA_INTERIOR</option>
+            <option>CALCETINES</option><option>ZAPATOS</option><option>COMPLEMENTOS</option>
+            <option>JOYAS</option><option>SOMBREROS</option><option>CHAQUETAS</option><option>ABRIGOS</option>
+          </select>
+          <label>Temporada</label>
+          <input [(ngModel)]="captureTemporada" />
+          <label>Talla</label>
+          <input [(ngModel)]="captureTalla" />
+          <div class="modal-actions">
+            <button class="logout" (click)="closeCapture()">Cancelar</button>
+            <button class="cta" (click)="savePrenda()">Guardar</button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}

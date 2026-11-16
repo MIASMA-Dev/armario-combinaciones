@@ -1,0 +1,61 @@
+version: "3.9"
+
+# Ejecutar con: podman-compose -f docker/podman-compose.yml up -d
+# Frontend: http://localhost:4200
+# Backend:  http://localhost:8080
+
+services:
+  postgres:
+    image: docker.io/library/postgres:16-alpine
+    container_name: armario-postgres-compose
+    environment:
+      POSTGRES_DB: armario
+      POSTGRES_USER: armario
+      POSTGRES_PASSWORD: armario
+    volumes:
+      - armario-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U armario -d armario"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/frontend.Containerfile
+    image: armario/frontend:latest
+    container_name: armario-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/backend.Containerfile
+    image: armario/backend:latest
+    container_name: armario-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev,postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/armario
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_DATASOURCE_USERNAME: armario
+      SPRING_DATASOURCE_PASSWORD: armario
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  default:
+    name: armario-net
+
+volumes:
+  armario-pgdata:

@@ -1,0 +1,6 @@
+package com.armario.domain;
+
+public enum TipoPrenda {
+    SUPERIOR, INFERIOR, ROPA_INTERIOR, CALCETINES, ZAPATOS,
+    COMPLEMENTOS, JOYAS, SOMBREROS, CHAQUETAS, ABRIGOS
+}

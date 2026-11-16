@@ -1,0 +1,25 @@
+# Dependencias y builds
+node_modules/
+dist/
+build/
+out/
+.next/
+.angular/
+coverage/
+*.log
+
+# Backend build
+target/
+.build/
+
+# Tauri build outputs
+src-tauri/target/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Sistema
+.DS_Store
+Thumbs.db
